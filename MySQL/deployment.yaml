@@ -31,6 +31,6 @@ spec:
             memory: "256Mi"
             cpu: "250m"
       volumes:
-      - name: mysql-volume
+      - name: mysql-pvc
         persistentVolumeClaim:
           claimName: mysql-pvc

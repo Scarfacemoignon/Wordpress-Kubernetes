@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: wordpress
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: wordpress
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: wordpress
-          image: wordpress:php8.3-fpm-alpine
+          image: wordpress:latest
           env:
             - name: WORDPRESS_DB_HOST
               value: "mysql"
@@ -22,12 +22,14 @@ spec:
               value: "root"
             - name: WORDPRESS_DB_PASSWORD
               value: "root"
+            - name: WORDPRESS_DB
+              value: "wordpress"
           ports:
             - containerPort: 80
           volumeMounts:
             - name: wordpress-pvc
               mountPath: /var/www/html
       volumes:
-        - name: wordpress-volume
+        - name: wordpress-pvc
           persistentVolumeClaim:
             claimName: wordpress-pvc
